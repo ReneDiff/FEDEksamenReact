@@ -59,6 +59,26 @@
       "examDurationMinutes": 20,
       "startTime": "15:00",
       "isCompleted": true
+    },
+    {
+      "id": "2ff8",
+      "courseName": "YAP",
+      "examtermin": "Sommer 25",
+      "date": "2025-06-19",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 15,
+      "startTime": "15:00",
+      "isCompleted": true
+    },
+    {
+      "id": "e739",
+      "courseName": "Eksamen",
+      "examtermin": "Eksamen 25",
+      "date": "2025-06-19",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "16:00",
+      "isCompleted": false
     }
   ],
   "students": [
@@ -161,6 +181,16 @@
       "grade": "12",
       "questionDrawn": 1,
       "actualExamDurationSeconds": 1
+    },
+    {
+      "id": "aec0",
+      "name": "Mark Jespersen",
+      "studentNumber": "2020202",
+      "examId": "2ff8",
+      "notes": "Han gør det godt\n\nOgså godt \n\nMere godt ",
+      "grade": "12",
+      "questionDrawn": 2,
+      "actualExamDurationSeconds": 14
     }
   ]
 }

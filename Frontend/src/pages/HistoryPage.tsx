@@ -30,7 +30,7 @@ export function HistoryPage() {
         completedExams.map(exam => (
           // Hvert element er nu et link til detaljesiden
           <Link to={`/exam/${exam.id}`} key={exam.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ border: '1px solid grey', padding: '10px', margin: '10px' }}>
+            <div className="card">
               <h2>{exam.courseName}</h2>
               <p>{exam.examtermin} - {new Date(exam.date).toLocaleDateString('da-DK')}</p>
             </div>
