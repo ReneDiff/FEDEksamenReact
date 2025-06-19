@@ -25,6 +25,7 @@ export function ExaminationPage() {
 
   const [isExamFinishedModalOpen, setIsExamFinishedModalOpen] = useState(false);
 
+  const gradeOptions = [-3, 0, 2, 4, 7, 10, 12];
 
   // Hent data ved start
   useEffect(() => {
@@ -138,7 +139,7 @@ export function ExaminationPage() {
   if (flowState === 'loading' || !currentStudent) return <div>Indlæser eksamen...</div>;
 
   return (
-    <div>
+    <div className='examination-container'>
       <h2>Eksaminand: {currentStudent.name}</h2>
         <p style={{ marginTop: '-10px', color: 'grey' }}>
         Studienr: {currentStudent.studentNumber}
@@ -180,10 +181,28 @@ export function ExaminationPage() {
           <h3>Resultat</h3>
           <p>Faktisk brugt tid: {Math.floor(timeElapsed / 60)} minutter og {timeElapsed % 60} sekunder.</p>
           <div>
-            <label>Karakter: </label>
-            <input type="text" value={grade} onChange={e => setGrade(e.target.value)} />
+          <label>Karakter: </label>
+          {/* Vi erstatter <input> med <select> */}
+          <select
+            value={grade}
+            onChange={e => setGrade(e.target.value)}
+            required
+            className="input-short" // Vi genbruger klassen fra før
+          >
+            {/* En standard-værdi, der ikke kan vælges */}
+            <option value="" disabled>Vælg karakter</option>
+            
+            {/* Vi mapper over vores karakter-muligheder og laver en <option> for hver */}
+            {gradeOptions.map(g => (
+              <option key={g} value={g}>
+                {g === 0 ? '00' : g} {/* Viser "00" for karakteren 0 */}
+              </option>
+            ))}
+          </select>
           </div>
-          <button onClick={handleSaveAndNext}>Gem og Næste Studerende</button>
+          <button onClick={handleSaveAndNext} style={{ marginTop: '20px' }}>
+            Gem og Næste Studerende
+          </button>
         </div>
       )}
       <Modal isOpen={isExamFinishedModalOpen} onClose={handleCloseModalAndNavigate}>

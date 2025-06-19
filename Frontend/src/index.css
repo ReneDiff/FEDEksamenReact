@@ -1,4 +1,4 @@
-/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 /* --- Globale Styles & Mørkt Tema --- */
 :root {
@@ -13,9 +13,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-color);
@@ -66,6 +64,7 @@ button {
 
 button:hover {
   filter: brightness(1.2);
+  transform: scale(1.02); /* Giver en lille "bounce"-effekt */
 }
 
 button:disabled {
@@ -101,6 +100,13 @@ editor {
 label {
   display: block;
   margin-bottom: 15px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: auto 1fr; /* Første kolonne tager den nødvendige plads, anden kolonne tager resten */
+  gap: 10px 20px; /* 10px mellem rækker, 20px mellem kolonner */
+  align-items: center; /* Centrerer indholdet vertikalt på hver række */
 }
 
 /* --- Genbrugelig "Card" stil --- */
@@ -150,4 +156,20 @@ label {
   font-size: 1.5rem;
   color: var(--text-color);
   cursor: pointer;
+}
+
+/* --- Til karaktergiving --- */
+.input-short {
+  max-width: 120px;
+}
+
+/* --- Til Centrering af karakter side--- */
+.examination-container {
+  max-width: 600px; /* Giver en pænere, smallere bredde */
+  margin: 0 auto; /* Centrerer selve containeren */
+  text-align: center; /* Centrerer teksten indeni */
+}
+
+.examination-container h2 {
+  font-size: 2.5rem; /* Gør navnet større for fokus */
 }
