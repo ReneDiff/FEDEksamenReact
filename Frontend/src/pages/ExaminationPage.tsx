@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Exam, Student } from '../types';
+import { Modal } from '../Components/Modal'; // Importer Modal
 
 // Definerer de forskellige trin i eksamensflowet
 type ExamFlowState = 'loading' | 'awaiting_question' | 'awaiting_start' | 'timer_running' | 'grading';
@@ -21,6 +22,9 @@ export function ExaminationPage() {
   const [grade, setGrade] = useState('');
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
+
+  const [isExamFinishedModalOpen, setIsExamFinishedModalOpen] = useState(false);
+
 
   // Hent data ved start
   useEffect(() => {
@@ -109,8 +113,7 @@ export function ExaminationPage() {
         // Vent på at BÅDE den studerende OG eksamenen er blevet gemt
         await Promise.all([updateStudentPromise, updateExamPromise]);
 
-        alert('Eksamen er afsluttet!');
-        navigate(`/exam/${examId}`); // Naviger tilbage til detaljesiden
+        setIsExamFinishedModalOpen(true);
     } else {
         // Hvis det IKKE er den sidste, skal vi kun vente på at studenten er gemt
         await updateStudentPromise;
@@ -123,6 +126,11 @@ export function ExaminationPage() {
         setGrade('');
         setTimeRemaining(exam ? exam.examDurationMinutes * 60 : 0);
     }
+  };
+
+  const handleCloseModalAndNavigate = () => {
+    setIsExamFinishedModalOpen(false); 
+    navigate(`/exam/${examId}`); 
   };
 
   const currentStudent = studentQueue[currentStudentIndex];
@@ -178,6 +186,11 @@ export function ExaminationPage() {
           <button onClick={handleSaveAndNext}>Gem og Næste Studerende</button>
         </div>
       )}
+      <Modal isOpen={isExamFinishedModalOpen} onClose={handleCloseModalAndNavigate}>
+        <h2>Eksamen er afsluttet!</h2>
+        <p>Alle studerende er blevet eksamineret.</p>
+        <button onClick={handleCloseModalAndNavigate}>Se resultater</button>
+      </Modal>
     </div>
   );
 }

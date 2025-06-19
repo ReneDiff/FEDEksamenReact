@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import { Exam } from '../types';
+import { ExamCard } from '../Components/ExamCard'; 
+ 
 
 export function ExamListPage() {
   const [exams, setExams] = useState<Exam[]>([]);
@@ -45,12 +47,7 @@ export function ExamListPage() {
       </div>
       <div>
         {exams.map(exam => (
-            <Link to={`/exam/${exam.id}`} key={exam.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="card">
-                    <h2>{exam.courseName}</h2>
-                    <p>{exam.examtermin} - {new Date(exam.date).toLocaleDateString('da-DK')}</p>
-                </div>
-            </Link>
+          <ExamCard key={exam.id} exam={exam} />
         ))}
       </div>
     </div>

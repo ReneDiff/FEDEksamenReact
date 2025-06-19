@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Exam } from '../types';
+import { ExamCard } from '../Components/ExamCard'; 
 
 export function HistoryPage() {
   const [completedExams, setCompletedExams] = useState<Exam[]>([]);
@@ -28,13 +29,7 @@ export function HistoryPage() {
       </div>
       {completedExams.length > 0 ? (
         completedExams.map(exam => (
-          // Hvert element er nu et link til detaljesiden
-          <Link to={`/exam/${exam.id}`} key={exam.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="card">
-              <h2>{exam.courseName}</h2>
-              <p>{exam.examtermin} - {new Date(exam.date).toLocaleDateString('da-DK')}</p>
-            </div>
-          </Link>
+          <ExamCard key={exam.id} exam={exam} />
         ))
       ) : (
         <p>Der er endnu ingen afsluttede eksamener i historikken.</p>

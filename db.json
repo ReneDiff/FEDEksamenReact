@@ -78,7 +78,7 @@
       "numberOfQuestions": 10,
       "examDurationMinutes": 20,
       "startTime": "16:00",
-      "isCompleted": false
+      "isCompleted": true
     }
   ],
   "students": [
@@ -191,6 +191,16 @@
       "grade": "12",
       "questionDrawn": 2,
       "actualExamDurationSeconds": 14
+    },
+    {
+      "id": "e196",
+      "name": "Jesoer",
+      "studentNumber": "1234",
+      "examId": "e739",
+      "notes": "Det går fint",
+      "grade": "12",
+      "questionDrawn": 4,
+      "actualExamDurationSeconds": 5
     }
   ]
 }
