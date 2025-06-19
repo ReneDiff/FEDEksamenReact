@@ -4,172 +4,104 @@
 :root {
   --background-color: #1e1e1e;
   --text-color: #e0e0e0;
-  --primary-color: #8a2be2; /* Lilla farve til knapper */
-  --secondary-color: #333333;
-  --border-color: #555555;
+  --text-color-secondary: #aaaaaa;
+  --primary-color: #9333ea; /* Opdateret lilla for bedre kontrast */
+  --primary-color-hover: #7e22ce;
+  --border-color: #444444;
   --card-background: #2a2a2a;
-  --success-color: #2e8b57; /* Grøn */
+  --card-background-hover: #313131;
+  --success-color: #22c55e;
 }
 
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-color);
   color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- Container til at centrere indholdet --- */
 #root {
   max-width: 960px;
   margin: 40px auto;
   padding: 20px;
 }
 
-/* --- Typografi --- */
-h1, h2, h3 {
-  color: #ffffff;
-  margin-top: 0;
-}
-
-h1 {
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid var(--border-color);
-}
-
-a {
-  text-decoration: none;
-  color: var(--primary-color);
-}
-
-
-/* --- Knapper --- */
-button {
+/* --- Genanvendelige komponent-styles --- */
+.button {
   background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1rem;
+  font-weight: 500;
   transition: background-color 0.2s;
+  text-decoration: none;
 }
 
-button:hover {
-  filter: brightness(1.2);
-  transform: scale(1.02); /* Giver en lille "bounce"-effekt */
+.button:hover {
+  background-color: var(--primary-color-hover);
 }
 
-button:disabled {
-  background-color: var(--secondary-color);
-  cursor: not-allowed;
-  filter: brightness(1);
+/* --- Specifikke Sidestyles --- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
 }
 
-/* --- Formular-felter --- */
-form {
-  background-color: var(--card-background);
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
+.page-header h1 {
+  margin: 0;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="time"],
-input[type="number"],
-textarea,
-editor {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  background-color: var(--secondary-color);
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
-  border-radius: 4px;
-  box-sizing: border-box; /* Vigtig for at padding ikke ødelægger bredden */
+.header-actions {
+  display: flex;
+  gap: 1rem;
 }
 
-label {
-  display: block;
-  margin-bottom: 15px;
-}
-
-.form-grid {
+/* --- Kort-layout til eksamensliste --- */
+.exam-list {
   display: grid;
-  grid-template-columns: auto 1fr; /* Første kolonne tager den nødvendige plads, anden kolonne tager resten */
-  gap: 10px 20px; /* 10px mellem rækker, 20px mellem kolonner */
-  align-items: center; /* Centrerer indholdet vertikalt på hver række */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
-/* --- Genbrugelig "Card" stil --- */
 .card {
   background-color: var(--card-background);
   border: 1px solid var(--border-color);
-  padding: 15px;
-  margin: 10px 0;
+  padding: 20px;
   border-radius: 8px;
-  transition: background-color 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Sørger for at Link-tagget fylder hele kortet */
 }
 
 .card:hover {
-  background-color: var(--secondary-color);
+  transform: translateY(-5px);
+  background-color: var(--card-background-hover);
 }
 
-/* --- Modal Styles --- */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background-color: var(--card-background);
-  padding: 30px;
-  border-radius: 8px;
-  position: relative;
-  min-width: 300px;
-  max-width: 500px;
-  border: 1px solid var(--border-color);
-}
-
-.modal-close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
   color: var(--text-color);
-  cursor: pointer;
 }
 
-/* --- Til karaktergiving --- */
-.input-short {
-  max-width: 120px;
+.card p {
+  margin: 0;
+  color: var(--text-color-secondary);
 }
 
-/* --- Til Centrering af karakter side--- */
-.examination-container {
-  max-width: 600px; /* Giver en pænere, smallere bredde */
-  margin: 0 auto; /* Centrerer selve containeren */
-  text-align: center; /* Centrerer teksten indeni */
-}
-
-.examination-container h2 {
-  font-size: 2.5rem; /* Gør navnet større for fokus */
+.card .status-completed {
+  color: var(--success-color);
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }

@@ -128,6 +128,16 @@
       "numberOfQuestions": 10,
       "examDurationMinutes": 20,
       "startTime": "09:00",
+      "isCompleted": true
+    },
+    {
+      "id": "ee7a",
+      "courseName": "FED",
+      "examtermin": "Sommer 25",
+      "date": "2025-06-20",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "09:00",
       "isCompleted": false
     }
   ],
@@ -336,7 +346,11 @@
       "id": "b348",
       "name": "Peter",
       "studentNumber": "20202020",
-      "examId": "e1ba"
+      "examId": "e1ba",
+      "notes": "dfd",
+      "grade": "12",
+      "questionDrawn": 3,
+      "actualExamDurationSeconds": 3
     }
   ]
 }

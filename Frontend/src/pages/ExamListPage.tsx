@@ -32,24 +32,26 @@ export function ExamListPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-      <h1>Aktive Eksamener</h1>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          {/* Link/knap til at oprette en ny eksamen */}
-          <Link to="/create">
-            <button>Opret ny eksamen</button>
-          </Link>
-          {/* Link/knap til den nye historik-side */}
-          <Link to="/history">
-            <button>Se Historik</button>
-          </Link>
+      <header className="page-header">
+        <h1>Aktive Eksamener</h1>
+        <div className="header-actions">
+          <Link to="/create" className="button">Opret ny eksamen</Link>
+          <Link to="/history" className="button">Historik</Link>
         </div>
-      </div>
-      <div>
-        {exams.map(exam => (
-          <ExamCard key={exam.id} exam={exam} />
-        ))}
-      </div>
+      </header>
+
+      <main>
+        {exams.length > 0 ? (
+          <div className="exam-list">
+            {/* Vi mapper over eksamener og viser en ExamCard for hver */}
+            {exams.map(exam => (
+              <ExamCard key={exam.id} exam={exam} />
+            ))}
+          </div>
+        ) : (
+          <p>Der er ingen aktive eksamener i øjeblikket.</p>
+        )}
+      </main>
     </div>
   );
 }
