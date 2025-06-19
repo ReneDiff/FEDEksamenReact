@@ -8,7 +8,7 @@
       "numberOfQuestions": 10,
       "examDurationMinutes": 15,
       "startTime": "09:00",
-      "isCompleted": false
+      "isCompleted": true
     },
     {
       "id": "2",
@@ -18,6 +18,46 @@
       "numberOfQuestions": 15,
       "examDurationMinutes": 20,
       "startTime": "09:00",
+      "isCompleted": true
+    },
+    {
+      "id": "2ff9",
+      "courseName": "FED",
+      "examtermin": "sommer25",
+      "date": "2025-06-19",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "15:00",
+      "isCompleted": true
+    },
+    {
+      "id": "aec0",
+      "courseName": "FED",
+      "examtermin": "Sommer 25",
+      "date": "2025-06-19",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 15,
+      "startTime": "15:00",
+      "isCompleted": true
+    },
+    {
+      "id": "7c0f",
+      "courseName": "BAD",
+      "examtermin": "Vinter 25",
+      "date": "2025-06-19",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "15:00",
+      "isCompleted": true
+    },
+    {
+      "id": "2294",
+      "courseName": "IDE",
+      "examtermin": "vinter 26",
+      "date": "2025-06-19",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "15:00",
       "isCompleted": true
     }
   ],
@@ -41,6 +81,86 @@
       "actualExamDurationSeconds": 960,
       "notes": "God redegørelse med kun ubetydelige mangler",
       "grade": "12"
+    },
+    {
+      "id": "fabf",
+      "name": "Rene Sand",
+      "studentNumber": "202305367",
+      "examId": "1",
+      "notes": "12",
+      "grade": "12",
+      "questionDrawn": 9,
+      "actualExamDurationSeconds": 1
+    },
+    {
+      "id": "afab",
+      "name": "Mark",
+      "studentNumber": "123213",
+      "examId": "1",
+      "notes": "12",
+      "grade": "7",
+      "questionDrawn": 8,
+      "actualExamDurationSeconds": 1
+    },
+    {
+      "id": "6116",
+      "name": "Rene Sand",
+      "studentNumber": "202022",
+      "examId": "2ff9",
+      "notes": "12",
+      "grade": "12",
+      "questionDrawn": 1,
+      "actualExamDurationSeconds": 1
+    },
+    {
+      "id": "1e35",
+      "name": "Rene ",
+      "studentNumber": "20256454",
+      "examId": "aec0",
+      "notes": "ok k",
+      "grade": "12",
+      "questionDrawn": 1,
+      "actualExamDurationSeconds": 11
+    },
+    {
+      "id": "af86",
+      "name": "Mark",
+      "studentNumber": "12346",
+      "examId": "aec0",
+      "notes": "12",
+      "grade": "12",
+      "questionDrawn": 9,
+      "actualExamDurationSeconds": 1
+    },
+    {
+      "id": "40cf",
+      "name": "Rene",
+      "studentNumber": "123214",
+      "examId": "7c0f",
+      "notes": "Hej",
+      "grade": "4",
+      "questionDrawn": 4,
+      "actualExamDurationSeconds": 3
+    },
+    {
+      "id": "b5bd",
+      "name": "Peter",
+      "studentNumber": "1234",
+      "examId": "2294",
+      "notes": "12",
+      "grade": "12",
+      "questionDrawn": 2,
+      "actualExamDurationSeconds": 1
+    },
+    {
+      "id": "22bf",
+      "name": "Mark",
+      "studentNumber": "1234",
+      "examId": "2294",
+      "notes": "12",
+      "grade": "12",
+      "questionDrawn": 1,
+      "actualExamDurationSeconds": 1
     }
   ]
 }
