@@ -1,0 +1,46 @@
+{
+  "exams": [
+    {
+      "id": "1",
+      "examtermin": "sommer 25",
+      "courseName": "Introduktion til Programmering",
+      "date": "2025-06-25",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 15,
+      "startTime": "09:00",
+      "isCompleted": false
+    },
+    {
+      "id": "2",
+      "examtermin": "sommer 25",
+      "courseName": "Avanceret Programmering",
+      "date": "2025-06-26",
+      "numberOfQuestions": 15,
+      "examDurationMinutes": 20,
+      "startTime": "09:00",
+      "isCompleted": true
+    }
+  ],
+  "students": [
+    {
+      "id": "1",
+      "examId": "2",
+      "studentNumber": "123456",
+      "name": "Alice Andersen",
+      "questionDrawn": 1,
+      "actualExamDurationSeconds": 900,
+      "notes": "Svarer rigtig godt på spørgsmålet, men har dog en fejl i koden",
+      "grade": "10"
+    },
+    {
+      "id": "2",
+      "examId": "2",
+      "studentNumber": "654321",
+      "name": "Bob Bakker",
+      "questionDrawn": 7,
+      "actualExamDurationSeconds": 960,
+      "notes": "God redegørelse med kun ubetydelige mangler",
+      "grade": "12"
+    }
+  ]
+}
