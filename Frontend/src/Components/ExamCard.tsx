@@ -14,7 +14,6 @@ export function ExamCard({ exam }: ExamCardProps) {
 
   return (
       <Link to={`/exam/${exam.id}`} className="card">
-        {/* Hvis eksamen er færdig, vis et "FÆRDIG"-mærkat */}
         {exam.isCompleted && (
           <p className="status-completed">FÆRDIG</p>
         )}

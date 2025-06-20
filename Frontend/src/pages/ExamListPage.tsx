@@ -43,7 +43,6 @@ export function ExamListPage() {
       <main>
         {exams.length > 0 ? (
           <div className="exam-list">
-            {/* Vi mapper over eksamener og viser en ExamCard for hver */}
             {exams.map(exam => (
               <ExamCard key={exam.id} exam={exam} />
             ))}

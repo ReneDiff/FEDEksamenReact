@@ -1,11 +1,12 @@
 import { useState, useEffect, FormEvent } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { Exam, Student } from "../types";
 
 
 export function ExamDetailPage() {
   const { examId } = useParams<{ examId: string }>();
   const navigate = useNavigate();
+  const location = useLocation(); 
 
   const [exam, setExam] = useState<Exam | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
@@ -18,7 +19,7 @@ export function ExamDetailPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!examId) return; // Stop hvis der ikke er noget ID
+    if (!examId) return; 
 
     const fetchExamData = fetch(`http://localhost:3001/exams/${examId}`);
     const fetchStudentsData = fetch(`http://localhost:3001/students?examId=${examId}`);
@@ -42,7 +43,7 @@ export function ExamDetailPage() {
         setIsLoading(false);
       });
 
-  }, [examId]); // Dependency array: useEffect kører igen hvis examId ændrer sig
+  }, [examId,location.key]); 
 
   const handleAddStudent = (event: FormEvent) => {
     event.preventDefault();
@@ -51,7 +52,7 @@ export function ExamDetailPage() {
     const newStudent = {
       name: newStudentName,
       studentNumber: newStudentNumber,
-      examId: examId // Kobl student til den korrekte eksamen
+      examId: examId 
   };
 
     fetch('http://localhost:3001/students', {
@@ -89,41 +90,37 @@ export function ExamDetailPage() {
   if (!exam) return <div>Eksamen blev ikke fundet.</div>;
 
 return (
-   <div>
+    <div>
       <header className="page-header">
         <h1>{exam.courseName}</h1>
         <div className="header-actions">
-          <Link to="/history" className="button">Tilbage til historik</Link>
+          {/* RETTET: Bruger nu en knap med navigate(-1) for at gå "tilbage" dynamisk */}
+          <button onClick={() => navigate(-1)} className="button">
+            Tilbage
+          </button>
         </div>
       </header>
-
+  
       <main className="page-content">
-        {/* Kort med eksamensdetaljer */}
         <div className="card">
           <h2>Eksamensdetaljer</h2>
           <p><strong>Termin:</strong> {exam.examtermin}</p>
           <p><strong>Dato:</strong> {new Date(exam.date).toLocaleDateString('da-DK', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
           <p><strong>Starttidspunkt:</strong> {exam.startTime}</p>
           <p><strong>Varighed:</strong> {exam.examDurationMinutes} minutter</p>
+          <p><strong>Antal spørgsmål:</strong> {exam.numberOfQuestions}</p>
         </div>
-
-        {/* Betinget rendering: Vis enten "før-eksamen" eller "efter-eksamen" view */}
+  
         {exam.isCompleted ? (
-          // View hvis eksamen ER færdig
-        <div className="card">
+          <div className="card">
             <h2>Resultater</h2>
-            
-            {/* 1. Vi kalder din eksisterende funktion for at vise gennemsnittet */}
             <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
                 {calculateAverageGrade()}
             </p>
-
             <hr style={{ margin: '1rem 0', border: 'none', borderBottom: '1px solid var(--border-color)' }}/>
-
             <div className="student-list">
                 {students.map(student => (
                     <div key={student.id} className="student-list-item">
-                        {/* Dette layout viser nu navn og studienummer i venstre side */}
                         <div style={{ flexGrow: 1 }}>
                             <div>
                                 <span className="list-item-label">Navn:</span>
@@ -134,7 +131,6 @@ return (
                                 <span>{student.studentNumber}</span>
                             </div>
                         </div>
-                        {/* 2. Og her tilføjer vi karakteren i højre side */}
                         <div style={{ textAlign: 'left' }}>
                             <span className="list-item-label">Karakter</span>
                             <p style={{ margin: 0, fontSize: '1.3rem', fontWeight: 'bold' }}>

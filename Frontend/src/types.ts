@@ -14,7 +14,7 @@ export interface Student {
   examId: string;
   studentNumber: string;
   name: string;
-  questionDrawn?: number; // '?' betyder at property'en er valgfri
+  questionDrawn?: number; 
   actualExamDurationSeconds?: number;
   notes?: string;
   grade?: string;

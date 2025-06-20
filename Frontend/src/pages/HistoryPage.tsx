@@ -17,7 +17,7 @@ export function HistoryPage() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  // useMemo bruges til at undgå at skulle filtrere og gruppere data ved hver re-render.
+  // useMemo bruges til at undgå at skulle filtrere og gruppere data ved hver re-render
   // Den kører kun, når 'completedExams' eller 'filterText' ændrer sig.
   const groupedAndFilteredExams = useMemo(() => {
     const filtered = completedExams.filter(exam =>
@@ -25,7 +25,6 @@ export function HistoryPage() {
       exam.examtermin.toLowerCase().includes(filterText.toLowerCase())
     );
 
-    // Grupperer de filtrerede eksamener efter deres termin.
     return filtered.reduce((acc, exam) => {
       const termin = exam.examtermin;
       if (!acc[termin]) {
@@ -60,12 +59,10 @@ export function HistoryPage() {
         </div>
 
         {Object.keys(groupedAndFilteredExams).length > 0 ? (
-          // Vi looper først gennem grupperne (terminer)
           Object.entries(groupedAndFilteredExams).map(([termin, examsInTerm]) => (
             <section key={termin}>
               <h2 className="history-group-title">{termin}</h2>
               <div className="exam-list">
-                {/* Derefter looper vi gennem eksamenerne i den pågældende gruppe */}
                 {examsInTerm.map(exam => (
                   <ExamCard key={exam.id} exam={exam} />
                 ))}

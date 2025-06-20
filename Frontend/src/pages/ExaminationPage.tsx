@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Exam, Student } from '../types';
-import { Modal } from '../Components/Modal'; // Importer Modal
+import { Modal } from '../Components/Modal'; 
 
-// Definerer de forskellige trin i eksamensflowet
 type ExamFlowState = 'loading' | 'awaiting_question' | 'awaiting_start' | 'timer_running' | 'grading';
 
 export function ExaminationPage() {
@@ -27,7 +26,6 @@ export function ExaminationPage() {
 
   const gradeOptions = [-3, 0, 2, 4, 7, 10, 12];
 
-  // Hent data ved start
   useEffect(() => {
     if (!examId) return;
     Promise.all([
@@ -43,7 +41,6 @@ export function ExaminationPage() {
     }).catch(console.error);
   }, [examId]);
 
-  // Effekt til at håndtere timeren
   useEffect(() => {
     if (flowState !== 'timer_running') return;
 
@@ -52,13 +49,11 @@ export function ExaminationPage() {
       setTimeElapsed(prev => prev + 1);
     }, 1000);
 
-    // Stop timeren hvis tiden løber ud
     if (timeRemaining <= 0) {
       clearInterval(timerId);
       setFlowState('grading');
     }
 
-    // Ryd op efter timeren, når komponenten forsvinder eller state ændres
     return () => clearInterval(timerId);
   }, [flowState, timeRemaining]);
 
@@ -71,12 +66,12 @@ export function ExaminationPage() {
   };
 
   const handleStartTimer = () => {
-    setTimeElapsed(0); // Nulstil den forløbne tid
-    setFlowState('timer_running'); // 
+    setTimeElapsed(0); 
+    setFlowState('timer_running'); 
   };
 
   const handleStopTimer = () => {
-    setFlowState('grading'); // 
+    setFlowState('grading'); 
   };
 
   const handleSaveAndNext = async () => {
@@ -93,14 +88,13 @@ export function ExaminationPage() {
         actualExamDurationSeconds: timeElapsed
     };
 
-    // Gem opdateringer for den aktuelle studerende
+    // Gemmer opdateringer for den aktuelle studerende
     const updateStudentPromise = fetch(`http://localhost:3001/students/${student.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedStudentPayload)
     });
 
-    // Tjek om det er den sidste studerende i køen
     const isLastStudent = currentStudentIndex >= studentQueue.length - 1;
 
     if (isLastStudent) {
@@ -111,12 +105,10 @@ export function ExaminationPage() {
         body: JSON.stringify({ isCompleted: true })
         });
 
-        // Vent på at BÅDE den studerende OG eksamenen er blevet gemt
         await Promise.all([updateStudentPromise, updateExamPromise]);
 
         setIsExamFinishedModalOpen(true);
     } else {
-        // Hvis det IKKE er den sidste, skal vi kun vente på at studenten er gemt
         await updateStudentPromise;
 
         // Gør klar til næste studerende
@@ -131,7 +123,8 @@ export function ExaminationPage() {
 
   const handleCloseModalAndNavigate = () => {
     setIsExamFinishedModalOpen(false); 
-    navigate(`/exam/${examId}`); 
+    navigate(-1); 
+    //navigate(`/exam/${examId}`,{replace:true}); 
   };
 
   const currentStudent = studentQueue[currentStudentIndex];
@@ -140,16 +133,15 @@ export function ExaminationPage() {
 
   return (
     <div className="examination-layout">
-      {/* --- HEADER: Viser eksamensnavn og en "Afslut"-knap --- */}
       <header className="page-header">
         <h1>{exam?.courseName}</h1>
         <div className="header-actions">
-          {/* Navigerer tilbage til detaljesiden, hvis man afbryder */}
-          <Link to={`/exam/${examId}`} className="button button-danger">Afslut</Link>
+            <button onClick={() => navigate(-1)} className="button button-danger">
+            Afslut
+          </button>
         </div>
       </header>
 
-      {/* --- KORT 1: Viser altid den nuværende studerende --- */}
       <div className="card">
         <p style={{ margin: 0, color: 'var(--text-color-secondary)' }}>
           Eksaminand {currentStudentIndex + 1} af {studentQueue.length}
@@ -160,7 +152,6 @@ export function ExaminationPage() {
         </p>
       </div>
 
-      {/* --- KORT 2: Dynamisk indhold baseret på flowState --- */}
 
       {/* Tilstand: Træk Spørgsmål */}
       {flowState === 'awaiting_question' && (
@@ -207,7 +198,6 @@ export function ExaminationPage() {
           <p style={{ color: 'var(--text-color-secondary)', textAlign: 'center' }}>
             Faktisk brugt tid: {Math.floor(timeElapsed / 60)} minutter og {timeElapsed % 60} sekunder.
           </p>
-          {/* Vi bruger en form for korrekt semantik og håndtering */}
           <form onSubmit={(e) => { e.preventDefault(); handleSaveAndNext(); }}>
             <div className="form-group" style={{ marginTop: '1rem' }}>
               <label htmlFor="notes-final">Endelige noter</label>
@@ -229,7 +219,6 @@ export function ExaminationPage() {
         </div>
       )}
 
-      {/* Modal-vindue til når eksamen er helt slut */}
       <Modal isOpen={isExamFinishedModalOpen} onClose={handleCloseModalAndNavigate}>
         <h2>Eksamen er slut</h2>
         <p>Alle studerende er blevet eksamineret.</p>

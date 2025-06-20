@@ -9,10 +9,8 @@ import { HistoryPage } from './pages/HistoryPage';
 function App() {
   return (
     <Routes>
-      {/* Rute for forsiden ('/') */}
       <Route path="/" element={<ExamListPage />} />
 
-      {/* Rute for detaljesiden. ':examId' er en dynamisk parameter. */}
       <Route path="/exam/:examId" element={<ExamDetailPage />} />
 
       <Route path="/create" element={<CreateExamPage />} />

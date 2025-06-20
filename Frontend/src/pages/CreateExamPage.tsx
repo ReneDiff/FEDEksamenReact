@@ -2,10 +2,8 @@ import { useState, FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 export function CreateExamPage() {
-  // useNavigate-hook lader os programmatisk sende brugeren til en ny side
   const navigate = useNavigate();
 
-  // Opret state for hvert input-felt i formularen
   const [courseName, setCourseName] = useState('');
   const [examTerm, setExamTerm] = useState('');
   const [date, setDate] = useState('');
@@ -14,7 +12,6 @@ export function CreateExamPage() {
   const [startTime, setStartTime] = useState('09:00');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Denne funktion kører, når formularen submittes
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault(); // Forhindrer at siden genindlæses
     setIsSubmitting(true);
@@ -43,7 +40,7 @@ export function CreateExamPage() {
         return response.json();
       })
       .then(() => {
-        // Når eksamen er oprettet, send brugeren tilbage til forsiden
+        // Når eksamen er oprettet, sendes brugeren tilbage til forsiden
         navigate('/');
       })
       .catch(error => {
@@ -54,7 +51,6 @@ export function CreateExamPage() {
 
   return (
     <div>
-      {/* --- STANDARD SIDE-HEADER --- */}
       <header className="page-header">
         <h1>Opret Ny Eksamen</h1>
         <div className="header-actions">
@@ -62,7 +58,6 @@ export function CreateExamPage() {
         </div>
       </header>
 
-      {/* --- FORMULAREN PAKKET IND I ET KORT --- */}
       <main className="page-content">
         <div className="card">
           <form onSubmit={handleSubmit}>
@@ -97,7 +92,6 @@ export function CreateExamPage() {
               <input id="examDurationMinutes" type="number" className="form-input" value={examDurationMinutes} onChange={e => setExamDurationMinutes(parseInt(e.target.value, 10))} required />
             </div>
 
-            {/* Knappen bruger nu vores standard .button klasse */}
             <button type="submit" className="button" disabled={isSubmitting} style={{ width: '100%', padding: '15px', fontSize: '1.2rem' }}>
               {isSubmitting ? 'Opretter...' : 'Opret Eksamen'}
             </button>
