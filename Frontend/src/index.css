@@ -2,15 +2,20 @@
 
 /* --- Globale Styles & Mørkt Tema --- */
 :root {
-  --background-color: #1e1e1e;
-  --text-color: #e0e0e0;
-  --text-color-secondary: #aaaaaa;
-  --primary-color: #9333ea; /* Opdateret lilla for bedre kontrast */
+  --background-color: #f8f9fa;
+  --text-color: #212529;
+  --text-color-secondary: #6c757d;
+  /* Knapper og links beholder den flotte lilla farve */
+  --primary-color: #9333ea;
   --primary-color-hover: #7e22ce;
-  --border-color: #444444;
-  --card-background: #2a2a2a;
-  --card-background-hover: #313131;
-  --success-color: #22c55e;
+
+  /* Farver til kort og kanter */
+  --border-color: #dee2e6; /* En lys grå kantfarve */
+  --card-background: #ffffff; /* Hvid baggrund til kort */
+  --card-background-hover: #f8f9fa; /* En let hover-effekt */
+  
+  /* Succes-farve forbliver grøn */
+  --success-color: #198754;
 }
 
 body {
@@ -104,4 +109,137 @@ body {
   font-weight: bold;
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
+}
+
+/* --- Styles til Detalje- og Formular-sider --- */
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color-secondary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  box-sizing: border-box; /* Vigtigt for at padding ikke ødelægger bredden */
+}
+
+/* Style til den nye studerendeliste */
+.student-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.student-list-item {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.student-list-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+
+.list-item-label {
+  color: var(--text-color-secondary);
+  font-weight: 500;
+  margin-right: 0.5rem; /* Lidt luft mellem label og værdi */
+}
+
+/* --- Styles til selve eksaminationssiden --- */
+
+.examination-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Til det store tal, når et spørgsmål er trukket */
+.drawn-question-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 1rem 0;
+  line-height: 1;
+}
+
+/* Til den store timer-tekst */
+.timer-display {
+  font-family: 'monospace', sans-serif; /* Giver et digitalt ur-look */
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 1rem 0;
+}
+
+/* En ny knap-variant til "fare"-handlinger */
+.button-danger {
+  --danger-bg: #dc3545;
+  --danger-bg-hover: #bb2d3b;
+  background-color: var(--danger-bg);
+}
+.button-danger:hover {
+  background-color: var(--danger-bg-hover);
+}
+
+/* --- Modal Styles --- */
+
+.modal-overlay {
+  position: fixed; /* Låser den fast i browservinduet */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Sort, semi-transparent baggrund */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Lægger den øverst */
+}
+
+.modal-content {
+  background-color: var(--card-background);
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+  min-width: 300px;
+  max-width: 500px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--text-color-secondary);
+}
+
+.modal-close-button:hover {
+    color: var(--text-color);
 }

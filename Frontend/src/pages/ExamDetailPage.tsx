@@ -1,11 +1,11 @@
 import { useState, useEffect, FormEvent } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Exam, Student } from "../types";
-import { Link } from 'react-router-dom'; 
 
 
 export function ExamDetailPage() {
   const { examId } = useParams<{ examId: string }>();
+  const navigate = useNavigate();
 
   const [exam, setExam] = useState<Exam | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
@@ -89,71 +89,97 @@ export function ExamDetailPage() {
   if (!exam) return <div>Eksamen blev ikke fundet.</div>;
 
 return (
-  <div>
-    <h1>{exam.courseName}</h1>
-    <p>Termin: {exam.examtermin} | Dato: {new Date(exam.date).toLocaleDateString('da-DK')}</p>
-    
-    <hr style={{ margin: '20px 0' }} />
-
-    {/* ---- Betinget rendering: Viser enten 'Før eksamen'-view eller 'Efter eksamen'-view ---- */}
-
-    {exam.isCompleted ? (
-      // VIEW 1: Vises HVIS eksamen er færdig (Historik)
-      <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2>Resultater</h2>
-          <Link to="/history">
-              <button>Tilbage til historik</button>
-          </Link>
+   <div>
+      <header className="page-header">
+        <h1>{exam.courseName}</h1>
+        <div className="header-actions">
+          <Link to="/" className="button">Tilbage til forsiden</Link>
         </div>
-        <p style={{fontStyle: 'italic'}}>{calculateAverageGrade()}</p>
-        
-        {students.map(student => {
-          const duration = student.actualExamDurationSeconds || 0;
-          const minutes = Math.floor(duration / 60);
-          const seconds = duration % 60;
+      </header>
 
-          return (
-            <div key={student.id} style={{ border: '1px solid #444', padding: '15px', margin: '10px 0' }}>
-              <p><strong>{student.name}</strong> ({student.studentNumber})</p>
-              <p><strong>Karakter: {student.grade || 'Ikke givet'}</strong></p>
-              <ul style={{ margin: 0, paddingLeft: '20px' }}>
-                <li>Trukket spørgsmål: {student.questionDrawn || 'N/A'}</li>
-                <li>Brugt tid: {minutes} min, {seconds} sek</li>
-                <li>Noter: {student.notes || 'Ingen'}</li>
-              </ul>
+      <main className="page-content">
+        {/* Kort med eksamensdetaljer */}
+        <div className="card">
+          <h2>Eksamensdetaljer</h2>
+          <p><strong>Termin:</strong> {exam.examtermin}</p>
+          <p><strong>Dato:</strong> {new Date(exam.date).toLocaleDateString('da-DK', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+          <p><strong>Starttidspunkt:</strong> {exam.startTime}</p>
+          <p><strong>Varighed:</strong> {exam.examDurationMinutes} minutter</p>
+        </div>
+
+        {/* Betinget rendering: Vis enten "før-eksamen" eller "efter-eksamen" view */}
+        {exam.isCompleted ? (
+          // View hvis eksamen ER færdig
+          <div className="card">
+            <h2>Resultater</h2>
+            {/* Her kan du indsætte logik til at vise gennemsnit etc. */}
+            <div className="student-list">
+              {students.map(s => (
+                <div key={s.id} className="student-list-item">
+                  {/* Container for Navn + Label */}
+                  <div>
+                    <span className="list-item-label">Navn:</span>
+                    <span>{s.name}</span>
+                  </div>
+                  {/* Container for Studienummer + Label */}
+                  <div>
+                    <span className="list-item-label">Studienummer:</span>
+                    <span>{s.studentNumber}</span>
+                  </div>
+                </div>
+              ))}
             </div>
-          )
-        })}
-      </div>
-    ) : (
-      // VIEW 2: Vises HVIS eksamen IKKE er færdig
-      <div>
-        <h2>Tilmeldte studerende</h2>
-        {students.length > 0 ? (
-          <ul>{students.map(s => <li key={s.id}>{s.name} ({s.studentNumber})</li>)}</ul>
+          </div>
         ) : (
-          <p>Der er endnu ingen studerende tilmeldt denne eksamen.</p>
+          // View hvis eksamen IKKE er færdig
+          <>
+            <div className="card">
+              <h2>Tilmeldte Studerende</h2>
+              {students.length > 0 ? (
+                <div className="student-list">
+                  {students.map(s => (
+                    <div key={s.id} className="student-list-item">
+                      {/* Container for Navn + Label */}
+                      <div>
+                        <span className="list-item-label">Navn:</span>
+                        <span>{s.name}</span>
+                      </div>
+                      {/* Container for Studienummer + Label */}
+                      <div>
+                        <span className="list-item-label">Studienummer:</span>
+                        <span>{s.studentNumber}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p>Ingen studerende er tilmeldt endnu.</p>
+              )}
+            </div>
+
+            <div className="card">
+              <h2>Tilføj ny studerende</h2>
+              <form onSubmit={handleAddStudent}>
+                <div className="form-group">
+                  <label htmlFor="studentName">Fulde navn</label>
+                  <input id="studentName" type="text" className="form-input" value={newStudentName} onChange={e => setNewStudentName(e.target.value)} required />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="studentNumber">Studienummer</label>
+                  <input id="studentNumber" type="text" className="form-input" value={newStudentNumber} onChange={e => setNewStudentNumber(e.target.value)} required />
+                </div>
+                <button type="submit" className="button" disabled={isSubmitting}>
+                  {isSubmitting ? 'Tilføjer...' : 'Tilføj studerende'}
+                </button>
+              </form>
+            </div>
+            
+            <Link to={`/exam/${examId}/start`} className="button" style={{textAlign: 'center', fontSize: '1.2rem', padding: '15px'}}>
+              Start Eksamen
+            </Link>
+          </>
         )}
-
-        <hr style={{ margin: '20px 0' }} />
-        <form onSubmit={handleAddStudent}>
-          <h3>Tilføj ny studerende</h3>
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Fulde navn: <input type="text" value={newStudentName} onChange={e => setNewStudentName(e.target.value)} required /></label>
-          </div>
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Studienummer: <input type="text" value={newStudentNumber} onChange={e => setNewStudentNumber(e.target.value)} required /></label>
-          </div>
-          <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Tilføjer...' : 'Tilføj studerende'}</button>
-        </form>
-
-        <hr style={{ margin: '20px 0' }} />
-        <Link to={`/exam/${exam.id}/start`}>
-          <button disabled={students.length === 0}>Start Eksamen</button>
-        </Link>
-      </div>
-    )}
-  </div>
+      </main>
+    </div>
   );
 }

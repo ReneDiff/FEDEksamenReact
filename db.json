@@ -138,6 +138,46 @@
       "numberOfQuestions": 10,
       "examDurationMinutes": 20,
       "startTime": "09:00",
+      "isCompleted": true
+    },
+    {
+      "id": "d411",
+      "courseName": "BAD",
+      "examtermin": "Forår 25",
+      "date": "2025-06-20",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "09:00",
+      "isCompleted": true
+    },
+    {
+      "id": "71e2",
+      "courseName": "IDE",
+      "examtermin": "Vinter 25",
+      "date": "2025-06-20",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "09:00",
+      "isCompleted": false
+    },
+    {
+      "id": "0859",
+      "courseName": "HAL",
+      "examtermin": "Forår 25",
+      "date": "2025-06-20",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "09:00",
+      "isCompleted": false
+    },
+    {
+      "id": "1c05",
+      "courseName": "ISU",
+      "examtermin": "Vinter 24",
+      "date": "2025-06-20",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "09:00",
       "isCompleted": false
     }
   ],
@@ -351,6 +391,46 @@
       "grade": "12",
       "questionDrawn": 3,
       "actualExamDurationSeconds": 3
+    },
+    {
+      "id": "3710",
+      "name": "Rene",
+      "studentNumber": "202305367",
+      "examId": "ee7a",
+      "notes": "jsjs",
+      "grade": "12",
+      "questionDrawn": 7,
+      "actualExamDurationSeconds": 3
+    },
+    {
+      "id": "3d64",
+      "name": "Marko",
+      "studentNumber": "2020202",
+      "examId": "ee7a",
+      "notes": "dd",
+      "grade": "0",
+      "questionDrawn": 7,
+      "actualExamDurationSeconds": 2
+    },
+    {
+      "id": "419e",
+      "name": "Jakob",
+      "studentNumber": "2020202",
+      "examId": "ee7a",
+      "notes": "dd",
+      "grade": "4",
+      "questionDrawn": 1,
+      "actualExamDurationSeconds": 2
+    },
+    {
+      "id": "fb37",
+      "name": "jakja",
+      "studentNumber": "22222",
+      "examId": "d411",
+      "notes": "Ser godt ud",
+      "grade": "4",
+      "questionDrawn": 9,
+      "actualExamDurationSeconds": 9
     }
   ]
 }

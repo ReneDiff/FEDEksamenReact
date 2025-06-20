@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Exam, Student } from '../types';
 import { Modal } from '../Components/Modal'; // Importer Modal
 
@@ -139,76 +139,103 @@ export function ExaminationPage() {
   if (flowState === 'loading' || !currentStudent) return <div>Indlæser eksamen...</div>;
 
   return (
-    <div className='examination-container'>
-      <h2>Eksaminand: {currentStudent.name}</h2>
-        <p style={{ marginTop: '-10px', color: 'grey' }}>
-        Studienr: {currentStudent.studentNumber}
+    <div className="examination-layout">
+      {/* --- HEADER: Viser eksamensnavn og en "Afslut"-knap --- */}
+      <header className="page-header">
+        <h1>{exam?.courseName}</h1>
+        <div className="header-actions">
+          {/* Navigerer tilbage til detaljesiden, hvis man afbryder */}
+          <Link to={`/exam/${examId}`} className="button button-danger">Afslut</Link>
+        </div>
+      </header>
+
+      {/* --- KORT 1: Viser altid den nuværende studerende --- */}
+      <div className="card">
+        <p style={{ margin: 0, color: 'var(--text-color-secondary)' }}>
+          Eksaminand {currentStudentIndex + 1} af {studentQueue.length}
         </p>
+        <h2 style={{ margin: '0 0 5px 0' }}>{currentStudent.name}</h2>
+        <p style={{ margin: 0, color: 'var(--text-color-secondary)' }}>
+          Studienummer: {currentStudent.studentNumber}
+        </p>
+      </div>
 
-      {/* Vis kun relevant UI baseret på den nuværende tilstand */}
+      {/* --- KORT 2: Dynamisk indhold baseret på flowState --- */}
+
+      {/* Tilstand: Træk Spørgsmål */}
       {flowState === 'awaiting_question' && (
-        <button onClick={handleDrawQuestion}>Træk Spørgsmål</button>
-      )}
-
-      {flowState === 'awaiting_start' && (
-        <div>
-          <p>Spørgsmål trukket: <strong>{drawnQuestion}</strong></p>
-          <button onClick={handleStartTimer}>Start Eksamination</button>
-        </div>
-      )}
-
-      {(flowState === 'timer_running' || flowState === 'grading') && (
-        <div>
-          <h3>Noter</h3>
-          <textarea 
-            value={notes} 
-            onChange={e => setNotes(e.target.value)} 
-            rows={5} 
-            style={{ width: '100%' }}
-          />
-        </div>
-      )}
-
-      {flowState === 'timer_running' && (
-        <div>
-          <h3>Tid tilbage: {Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}</h3>
-          <button onClick={handleStopTimer}>Slut Eksamination</button>
-        </div>
-      )}
-
-      {flowState === 'grading' && (
-        <div>
-          <h3>Resultat</h3>
-          <p>Faktisk brugt tid: {Math.floor(timeElapsed / 60)} minutter og {timeElapsed % 60} sekunder.</p>
-          <div>
-          <label>Karakter: </label>
-          {/* Vi erstatter <input> med <select> */}
-          <select
-            value={grade}
-            onChange={e => setGrade(e.target.value)}
-            required
-            className="input-short" // Vi genbruger klassen fra før
-          >
-            {/* En standard-værdi, der ikke kan vælges */}
-            <option value="" disabled>Vælg karakter</option>
-            
-            {/* Vi mapper over vores karakter-muligheder og laver en <option> for hver */}
-            {gradeOptions.map(g => (
-              <option key={g} value={g}>
-                {g === 0 ? '00' : g} {/* Viser "00" for karakteren 0 */}
-              </option>
-            ))}
-          </select>
-          </div>
-          <button onClick={handleSaveAndNext} style={{ marginTop: '20px' }}>
-            Gem og Næste Studerende
+        <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+          <h2>Klar til at trække spørgsmål</h2>
+          <button className="button" style={{ marginTop: '1rem' }} onClick={handleDrawQuestion}>
+            Træk Spørgsmål
           </button>
         </div>
       )}
+
+      {/* Tilstand: Start Timer */}
+      {flowState === 'awaiting_start' && (
+        <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+          <p style={{ color: 'var(--text-color-secondary)' }}>Spørgsmål trukket</p>
+          <h2 className="drawn-question-display">{drawnQuestion}</h2>
+          <button className="button" style={{ padding: '15px 30px', fontSize: '1.2rem' }} onClick={handleStartTimer}>
+            Start Eksamination
+          </button>
+        </div>
+      )}
+
+      {/* Tilstand: Timeren kører */}
+      {flowState === 'timer_running' && (
+        <div className="card" style={{ padding: '2rem' }}>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ color: 'var(--text-color-secondary)' }}>Resterende tid</p>
+            <h2 className="timer-display">{new Date(timeRemaining * 1000).toISOString().substr(14, 5)}</h2>
+            <button className="button button-danger" onClick={handleStopTimer}>
+              Afslut Præsentation
+            </button>
+          </div>
+          <div className="form-group" style={{ marginTop: '2rem' }}>
+            <label htmlFor="notes-running">Noter</label>
+            <textarea id="notes-running" className="form-input" rows={6} value={notes} onChange={e => setNotes(e.target.value)} placeholder="Dine noter undervejs..."></textarea>
+          </div>
+        </div>
+      )}
+
+      {/* Tilstand: Karaktergivning */}
+      {flowState === 'grading' && (
+        <div className="card" style={{ padding: '2rem' }}>
+          <h2>Votering og Karakter</h2>
+          <p style={{ color: 'var(--text-color-secondary)', textAlign: 'center' }}>
+            Faktisk brugt tid: {Math.floor(timeElapsed / 60)} minutter og {timeElapsed % 60} sekunder.
+          </p>
+          {/* Vi bruger en form for korrekt semantik og håndtering */}
+          <form onSubmit={(e) => { e.preventDefault(); handleSaveAndNext(); }}>
+            <div className="form-group" style={{ marginTop: '1rem' }}>
+              <label htmlFor="notes-final">Endelige noter</label>
+              <textarea id="notes-final" className="form-input" rows={4} value={notes} onChange={e => setNotes(e.target.value)}></textarea>
+            </div>
+            <div className="form-group">
+              <label htmlFor="grade-select">Karakter</label>
+              <select id="grade-select" className="form-input" value={grade} onChange={e => setGrade(e.target.value)} required>
+                <option value="" disabled>Vælg karakter</option>
+                {gradeOptions.map(g => (
+                  <option key={g} value={g}>{g === 0 ? '00' : g}</option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" className="button" style={{ width: '100%', padding: '15px', fontSize: '1.2rem' }}>
+              Gem og Næste Studerende
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* Modal-vindue til når eksamen er helt slut */}
       <Modal isOpen={isExamFinishedModalOpen} onClose={handleCloseModalAndNavigate}>
-        <h2>Eksamen er afsluttet!</h2>
+        <h2>Eksamen er slut</h2>
         <p>Alle studerende er blevet eksamineret.</p>
-        <button onClick={handleCloseModalAndNavigate}>Se resultater</button>
+        <button className="button" onClick={handleCloseModalAndNavigate} style={{ marginTop: '1rem' }}>
+          Gå til resultatsiden
+        </button>
       </Modal>
     </div>
   );
