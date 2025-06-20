@@ -93,7 +93,7 @@ return (
       <header className="page-header">
         <h1>{exam.courseName}</h1>
         <div className="header-actions">
-          <Link to="/" className="button">Tilbage til forsiden</Link>
+          <Link to="/history" className="button">Tilbage til historik</Link>
         </div>
       </header>
 
@@ -110,23 +110,38 @@ return (
         {/* Betinget rendering: Vis enten "før-eksamen" eller "efter-eksamen" view */}
         {exam.isCompleted ? (
           // View hvis eksamen ER færdig
-          <div className="card">
+        <div className="card">
             <h2>Resultater</h2>
-            {/* Her kan du indsætte logik til at vise gennemsnit etc. */}
+            
+            {/* 1. Vi kalder din eksisterende funktion for at vise gennemsnittet */}
+            <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
+                {calculateAverageGrade()}
+            </p>
+
+            <hr style={{ margin: '1rem 0', border: 'none', borderBottom: '1px solid var(--border-color)' }}/>
+
             <div className="student-list">
-              {students.map(s => (
-                <div key={s.id} className="student-list-item">
-                  {/* Container for Navn + Label */}
-                  <div>
-                    <span className="list-item-label">Navn:</span>
-                    <span>{s.name}</span>
-                  </div>
-                  {/* Container for Studienummer + Label */}
-                  <div>
-                    <span className="list-item-label">Studienummer:</span>
-                    <span>{s.studentNumber}</span>
-                  </div>
-                </div>
+                {students.map(student => (
+                    <div key={student.id} className="student-list-item">
+                        {/* Dette layout viser nu navn og studienummer i venstre side */}
+                        <div style={{ flexGrow: 1 }}>
+                            <div>
+                                <span className="list-item-label">Navn:</span>
+                                <span>{student.name}</span>
+                            </div>
+                            <div>
+                                <span className="list-item-label">Studienummer:</span>
+                                <span>{student.studentNumber}</span>
+                            </div>
+                        </div>
+                        {/* 2. Og her tilføjer vi karakteren i højre side */}
+                        <div style={{ textAlign: 'left' }}>
+                            <span className="list-item-label">Karakter</span>
+                            <p style={{ margin: 0, fontSize: '1.3rem', fontWeight: 'bold' }}>
+                                {student.grade || '-'}
+                            </p> 
+                        </div>
+                    </div>
               ))}
             </div>
           </div>

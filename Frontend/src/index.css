@@ -243,3 +243,15 @@ body {
 .modal-close-button:hover {
     color: var(--text-color);
 }
+
+/* Style til overskrifter for hver gruppe på historik-siden */
+.history-group-title {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-color);
+  font-size: 1.5rem;
+}
+.history-group-title:first-child {
+  margin-top: 0;
+}

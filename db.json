@@ -179,6 +179,16 @@
       "examDurationMinutes": 20,
       "startTime": "09:00",
       "isCompleted": false
+    },
+    {
+      "id": "114f",
+      "courseName": "FEDDE",
+      "examtermin": "Forår 25",
+      "date": "2025-06-20",
+      "numberOfQuestions": 10,
+      "examDurationMinutes": 20,
+      "startTime": "13:00",
+      "isCompleted": false
     }
   ],
   "students": [
@@ -431,6 +441,18 @@
       "grade": "4",
       "questionDrawn": 9,
       "actualExamDurationSeconds": 9
+    },
+    {
+      "id": "d567",
+      "name": "Mig Selv",
+      "studentNumber": "12344321",
+      "examId": "71e2"
+    },
+    {
+      "id": "eae1",
+      "name": "Ham Selv",
+      "studentNumber": "43211234",
+      "examId": "71e2"
     }
   ]
 }

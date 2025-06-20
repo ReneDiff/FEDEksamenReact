@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export function CreateExamPage() {
   // useNavigate-hook lader os programmatisk sende brugeren til en ny side
@@ -54,48 +54,57 @@ export function CreateExamPage() {
 
   return (
     <div>
-      <h1>Opret ny eksamen</h1>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>
-            Kursusnavn:
-            <input type="text" value={courseName} onChange={e => setCourseName(e.target.value)} required />
-          </label>
+      {/* --- STANDARD SIDE-HEADER --- */}
+      <header className="page-header">
+        <h1>Opret Ny Eksamen</h1>
+        <div className="header-actions">
+          <Link to="/" className="button">Tilbage</Link>
         </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>
-            Eksamenstermin:
-            <input type="text" value={examTerm} onChange={e => setExamTerm(e.target.value)} required />
-          </label>
+      </header>
+
+      {/* --- FORMULAREN PAKKET IND I ET KORT --- */}
+      <main className="page-content">
+        <div className="card">
+          <form onSubmit={handleSubmit}>
+            
+            <div className="form-group">
+              <label htmlFor="courseName">Kursusnavn</label>
+              <input id="courseName" type="text" className="form-input" value={courseName} onChange={e => setCourseName(e.target.value)} required />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="examTerm">Eksamenstermin</label>
+              <input id="examTerm" type="text" className="form-input" value={examTerm} onChange={e => setExamTerm(e.target.value)} required />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="date">Dato</label>
+              <input id="date" type="date" className="form-input" value={date} onChange={e => setDate(e.target.value)} required />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="startTime">Starttidspunkt</label>
+              <input id="startTime" type="time" className="form-input" value={startTime} onChange={e => setStartTime(e.target.value)} required />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="numberOfQuestions">Antal spørgsmål</label>
+              <input id="numberOfQuestions" type="number" className="form-input" value={numberOfQuestions} onChange={e => setNumberOfQuestions(parseInt(e.target.value, 10))} required />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="examDurationMinutes">Eksaminationstid (minutter)</label>
+              <input id="examDurationMinutes" type="number" className="form-input" value={examDurationMinutes} onChange={e => setExamDurationMinutes(parseInt(e.target.value, 10))} required />
+            </div>
+
+            {/* Knappen bruger nu vores standard .button klasse */}
+            <button type="submit" className="button" disabled={isSubmitting} style={{ width: '100%', padding: '15px', fontSize: '1.2rem' }}>
+              {isSubmitting ? 'Opretter...' : 'Opret Eksamen'}
+            </button>
+            
+          </form>
         </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>
-            Dato:
-            <input type="date" value={date} onChange={e => setDate(e.target.value)} required />
-          </label>
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>
-            Starttidspunkt:
-            <input type="time" value={startTime} onChange={e => setStartTime(e.target.value)} required />
-          </label>
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>
-            Antal spørgsmål:
-            <input type="number" value={numberOfQuestions} onChange={e => setNumberOfQuestions(parseInt(e.target.value, 10))} required />
-          </label>
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>
-            Eksaminationstid (minutter):
-            <input type="number" value={examDurationMinutes} onChange={e => setExamDurationMinutes(parseInt(e.target.value, 10))} required />
-          </label>
-        </div>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Opretter...' : 'Opret Eksamen'}
-        </button>
-      </form>
+      </main>
     </div>
   );
 }
